@@ -56,10 +56,14 @@ function displayCart() {
     let totalCost = 0;
 
     for (const product in cart) {
-        const cartItem = document.createElement('div');
-        cartItem.innerHTML = `<p>${product} - ₹${cart[product].price} x ${cart[product].quantity} = ₹${cart[product].price * cart[product].quantity}</p>`;
-        cartList.appendChild(cartItem);
-        totalCost += cart[product].price * cart[product].quantity;
+        // Ensure the product name, price, and quantity are not undefined
+        const item = cart[product];
+        if (item && item.price && item.quantity) {
+            const cartItem = document.createElement('div');
+            cartItem.innerHTML = `<p>${product} - ₹${item.price} x ${item.quantity} = ₹${item.price * item.quantity}</p>`;
+            cartList.appendChild(cartItem);
+            totalCost += item.price * item.quantity;
+        }
     }
 
     if (Object.keys(cart).length > 0) {
@@ -70,6 +74,7 @@ function displayCart() {
         document.getElementById('checkout-btn').style.display = 'none';
     }
 }
+
 // Proceed to Checkout
 function proceedToCheckout() {
     document.getElementById('checkout-form').style.display = 'block';
