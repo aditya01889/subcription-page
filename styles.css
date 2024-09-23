@@ -5,35 +5,54 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
-    text-align: center;
 }
 
 header {
-    background-color: #333;
-    color: white;
+    background-color: #fff;
+}
+
+.header-banner img {
+    width: 100%;
+    height: auto;
+}
+
+/* Sidebar for Product Categories */
+.sidebar {
+    width: 20%;
+    float: left;
     padding: 20px;
+    background-color: #f9f9f9;
 }
 
-h1 {
-    margin: 0;
-    font-size: 28px;
+.sidebar h3 {
+    font-size: 18px;
 }
 
-h2 {
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin: 10px 0;
+}
+
+.sidebar a {
+    text-decoration: none;
     color: #333;
-    font-size: 22px;
 }
 
-/* Product Section */
-#products {
-    padding: 20px;
+/* Product Grid */
+.product-list-container {
+    width: 75%;
+    float: right;
 }
 
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-    justify-items: center;
+    padding: 20px;
 }
 
 .product {
@@ -41,8 +60,6 @@ h2 {
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 15px;
-    width: 90%;
-    max-width: 250px;
     text-align: center;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -51,7 +68,7 @@ button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 10px;
     cursor: pointer;
     border-radius: 5px;
 }
@@ -64,10 +81,33 @@ button:hover {
 #cart-section {
     padding: 20px;
     background-color: #fff;
-    margin: 20px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    clear: both;
 }
+
+/* Plus and Minus buttons */
+.product-quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.product-quantity button {
+    width: 30px;
+    height: 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.product-quantity input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ddd;
+    margin: 0 10px;
+}
+
 
 /* Form Section */
 #checkout-form {

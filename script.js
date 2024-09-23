@@ -7,7 +7,7 @@ const products = [
 ];
 
 // Cart Data
-let cart = [];
+let cart = {};
 
 // Load Products
 function loadProducts() {
@@ -20,40 +20,49 @@ function loadProducts() {
             <h3>${product.name}</h3>
             <p>${product.description}</p>
             <p>₹${product.price}</p>
-            <label for="frequency">Subscription Frequency</label>
-            <select id="frequency-${product.name}">
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-            </select>
+            <div class="product-quantity">
+                <button onclick="changeQuantity('${product.name}', -1)">-</button>
+                <input type="text" id="quantity-${product.name}" value="0" readonly>
+                <button onclick="changeQuantity('${product.name}', 1)">+</button>
+            </div>
             <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
         `;
         productList.appendChild(productDiv);
     });
 }
 
-// Add to Cart
-function addToCart(productName, price) {
-    const frequency = document.getElementById(`frequency-${productName}`).value;
-    const product = { name: productName, price: price, frequency: frequency };
-    cart.push(product);
-    localStorage.setItem('cart', JSON.stringify(cart)); // Save to local storage
-    displayCart();
+// Change Product Quantity
+function changeQuantity(productName, change) {
+    const quantityInput = document.getElementById(`quantity-${productName}`);
+    let currentQuantity = parseInt(quantityInput.value);
+    currentQuantity += change;
+    if (currentQuantity < 0) currentQuantity = 0; // Prevent negative quantity
+    quantityInput.value = currentQuantity;
 }
 
-// Display Cart with Total Cost
+// Add to Cart
+function addToCart(productName, price) {
+    const quantity = parseInt(document.getElementById(`quantity-${productName}`).value);
+    if (quantity > 0) {
+        cart[productName] = { price: price, quantity: quantity };
+        displayCart();
+    }
+}
+
+// Display Cart with Total Cost and Quantity Management
 function displayCart() {
     const cartList = document.getElementById('cart-list');
     cartList.innerHTML = '';
     let totalCost = 0;
 
-    cart.forEach(item => {
+    for (const product in cart) {
         const cartItem = document.createElement('div');
-        cartItem.innerHTML = `<p>${item.name} - ₹${item.price} (${item.frequency})</p>`;
+        cartItem.innerHTML = `<p>${product} - ₹${cart[product].price} x ${cart[product].quantity} = ₹${cart[product].price * cart[product].quantity}</p>`;
         cartList.appendChild(cartItem);
-        totalCost += item.price;
-    });
+        totalCost += cart[product].price * cart[product].quantity;
+    }
 
-    if (cart.length > 0) {
+    if (Object.keys(cart).length > 0) {
         cartList.innerHTML += `<p><strong>Total: ₹${totalCost}</strong></p>`;
         document.getElementById('checkout-btn').style.display = 'block';
     } else {
@@ -61,7 +70,6 @@ function displayCart() {
         document.getElementById('checkout-btn').style.display = 'none';
     }
 }
-
 // Proceed to Checkout
 function proceedToCheckout() {
     document.getElementById('checkout-form').style.display = 'block';
