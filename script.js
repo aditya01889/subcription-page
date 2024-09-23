@@ -73,56 +73,99 @@ function displayCart() {
     }
 }
 
-
-// Proceed to Checkout
+// Proceed to Checkout (Paytm Checkout Integration)
 function proceedToCheckout() {
-    document.getElementById('checkout-form').style.display = 'block';
-}
+    const totalAmount = calculateTotalAmount();
+    const customerDetails = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        address: document.getElementById('address').value
+    };
 
-// Submit Form and Process Payment
-function submitForm() {
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const address = document.getElementById('address').value;
-
-    // Validate form inputs
-    if (!validateEmail(email)) {
+    if (!validateEmail(customerDetails.email)) {
         showError("Please enter a valid email address.");
         return;
     }
 
-    if (!validateAddress(address)) {
+    if (!validateAddress(customerDetails.address)) {
         showError("We only deliver to Noida. Please enter a valid Noida address.");
         return;
     }
 
-    if (!cart || cart.length === 0) {
-        showError("Your cart is empty.");
-        return;
-    }
+    // Call your Vercel backend to get the transaction token for Paytm
+    fetch('https://cozycatkitchen-backend.vercel.app/create-paytm-transaction', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            amount: totalAmount,
+            email: customerDetails.email,
+            phone: '9876543210'  // Replace with actual phone field if necessary
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Paytm Checkout JS - open modal
+        if (window.Paytm && window.Paytm.CheckoutJS) {
+            window.Paytm.CheckoutJS.init({
+                flow: "DEFAULT",
+                data: {
+                    orderId: data.orderId,  // Received from server
+                    token: data.txnToken,   // Transaction token received from server
+                    tokenType: "TXN_TOKEN",
+                    amount: totalAmount,
+                },
+                handler: {
+                    notifyMerchant: function(eventName, data){
+                        if(eventName === 'APPROVED') {
+                            // Payment is successful, trigger the Shiprocket order
+                            createShiprocketOrder(customerDetails);
+                        }
+                    }
+                }
+            }).then(function() {
+                window.Paytm.CheckoutJS.invoke();
+            }).catch(function(error){
+                console.log("Error invoking Paytm CheckoutJS", error);
+            });
+        }
+    })
+    .catch(error => {
+        showError("Error generating transaction token: " + error.message);
+    });
+}
 
-    // Show loading while processing
-    showLoading();
-
+// Create Shiprocket Order after successful payment
+function createShiprocketOrder(customerDetails) {
     const orderDetails = {
-        customer: { name, email, address },
-        cart: cart
+        "order_id": "123456",  // Unique ID for your order
+        "order_date": new Date().toISOString(),
+        "pickup_location": "Primary Pickup Location",
+        "billing_customer_name": customerDetails.name,
+        "billing_address": customerDetails.address,
+        "billing_city": "Noida",
+        "billing_pincode": "201301",
+        "billing_country": "India",
+        "order_items": Object.keys(cart).map(product => ({
+            "name": product,
+            "sku": product,
+            "units": cart[product].quantity,
+            "selling_price": cart[product].price
+        }))
     };
 
-    // Simulate success or error
-    setTimeout(() => {
-        hideLoading();
-        // Simulate success or error randomly
-        const isSuccess = Math.random() > 0.5;
-        if (isSuccess) {
-            showSuccess("Payment and shipment created successfully!");
-            localStorage.removeItem('cart'); // Clear cart after success
-            cart = []; // Reset cart in-memory
-            displayCart(); // Update cart view
-        } else {
-            showError("An error occurred during payment or shipment.");
-        }
-    }, 2000);
+    fetch('https://cozycatkitchen-backend.vercel.app/create-shiprocket-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderDetails)
+    })
+    .then(response => response.json())
+    .then(data => {
+        showSuccess("Order created successfully with Shiprocket!");
+        localStorage.removeItem('cart');
+        cart = {}; // Clear the cart
+        displayCart(); // Update the cart view
+    })
+    .catch(error => showError("Error creating Shiprocket order: " + error.message));
 }
 
 // Validate Email (Regex)
@@ -136,31 +179,16 @@ function validateAddress(address) {
     return address.toLowerCase().includes("noida");
 }
 
-// Show loading indicator
-function showLoading() {
-    document.getElementById('loading-indicator').style.display = 'block';
-}
-
-// Hide loading indicator
-function hideLoading() {
-    document.getElementById('loading-indicator').style.display = 'none';
-}
-
-// Function to show success modal
+// Show success message
 function showSuccess(message) {
     document.getElementById('success-message').textContent = message;
     document.getElementById('success-modal').style.display = 'block';
 }
 
-// Function to show error modal
+// Show error message
 function showError(message) {
     document.getElementById('error-message').textContent = message;
     document.getElementById('error-modal').style.display = 'block';
-}
-
-// Function to close modals
-function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
 }
 
 // Load Cart from Local Storage on Page Load
@@ -172,3 +200,14 @@ window.onload = function() {
         displayCart();
     }
 };
+
+// Helper function to calculate the total amount
+function calculateTotalAmount() {
+    let total = 0;
+    for (const product in cart) {
+        if (cart[product].quantity > 0) {
+            total += cart[product].price * cart[product].quantity;
+        }
+    }
+    return total;
+}
