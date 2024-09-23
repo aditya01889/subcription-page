@@ -1,9 +1,7 @@
 // Product Data
 const products = [
-    { name: 'Power', price: 70, description: 'High Protein Meal', image: 'images/power.png' },
-    { name: 'Supreme', price: 70, description: 'Special Nourishment', image: 'images/supreme.png' },
-    { name: 'Vitality', price: 70, description: 'Energy Booster', image: 'images/vitality.png' },
-    { name: 'Nourish', price: 70, description: 'Complete Diet', image: 'images/nourish.png' }
+    { name: 'Kitten', price: 1499, description: 'High Protein Meal', image: 'images/power.png' },
+    { name: 'Cat', price: 1799, description: 'Special Nourishment', image: 'images/supreme.png' },
 ];
 
 // Cart Data
