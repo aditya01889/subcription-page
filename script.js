@@ -79,12 +79,18 @@ function proceedToCheckout() {
     const customerDetails = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
-        address: document.getElementById('address').value
+        address: document.getElementById('address').value,
+        phone: document.getElementById('phone').value // Use actual phone input field
     };
     const subscriptionFrequency = document.getElementById('subscription-frequency').value; // Example: 'MONTHLY', 'WEEKLY'
 
     if (!validateEmail(customerDetails.email)) {
         showError("Please enter a valid email address.");
+        return;
+    }
+
+    if (!validatePhone(customerDetails.phone)) {
+        showError("Please enter a valid phone number.");
         return;
     }
 
@@ -100,7 +106,7 @@ function proceedToCheckout() {
         body: JSON.stringify({
             amount: totalAmount,
             email: customerDetails.email,
-            phone: '9876543210',  // Replace with actual phone field if necessary
+            phone: customerDetails.phone,  // Now using the actual phone field
             subscriptionFrequency: subscriptionFrequency
         })
     })
@@ -139,7 +145,7 @@ function proceedToCheckout() {
 // Create Shiprocket Order after successful payment
 function createShiprocketOrder(customerDetails) {
     const orderDetails = {
-        "order_id": "123456",  // Unique ID for your order
+        "order_id": `ORDER_${new Date().getTime()}`,  // Unique ID for your order
         "order_date": new Date().toISOString(),
         "pickup_location": "Primary Pickup Location",
         "billing_customer_name": customerDetails.name,
@@ -174,6 +180,12 @@ function createShiprocketOrder(customerDetails) {
 function validateEmail(email) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
+}
+
+// Validate Phone (Indian format)
+function validatePhone(phone) {
+    const phonePattern = /^[6-9]\d{9}$/;  // Indian phone number format
+    return phonePattern.test(phone);
 }
 
 // Validate Address (Only Noida)
