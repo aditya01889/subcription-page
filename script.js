@@ -73,7 +73,7 @@ function displayCart() {
     }
 }
 
-// Proceed to Checkout (Paytm Checkout Integration)
+// Proceed to Checkout (Paytm Subscription Integration)
 function proceedToCheckout() {
     const totalAmount = calculateTotalAmount();
     const customerDetails = {
@@ -81,6 +81,7 @@ function proceedToCheckout() {
         email: document.getElementById('email').value,
         address: document.getElementById('address').value
     };
+    const subscriptionFrequency = document.getElementById('subscription-frequency').value; // Example: 'MONTHLY', 'WEEKLY'
 
     if (!validateEmail(customerDetails.email)) {
         showError("Please enter a valid email address.");
@@ -92,45 +93,46 @@ function proceedToCheckout() {
         return;
     }
 
-    // Call your Vercel backend to get the transaction token for Paytm
-    fetch('https://cozycatkitchen-backend.vercel.app/create-paytm-transaction', {
+    // Call your Vercel backend to create a subscription via Paytm
+    fetch('https://cozycatkitchen-backend.vercel.app/create-paytm-subscription', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             amount: totalAmount,
             email: customerDetails.email,
-            phone: '9876543210'  // Replace with actual phone field if necessary
+            phone: '9876543210',  // Replace with actual phone field if necessary
+            subscriptionFrequency: subscriptionFrequency
         })
     })
     .then(response => response.json())
     .then(data => {
-        // Paytm Checkout JS - open modal
+        // Handle the Paytm Subscription flow here (like you would for a one-time payment)
         if (window.Paytm && window.Paytm.CheckoutJS) {
             window.Paytm.CheckoutJS.init({
                 flow: "DEFAULT",
                 data: {
-                    orderId: data.orderId,  // Received from server
-                    token: data.txnToken,   // Transaction token received from server
+                    orderId: data.orderId,
+                    token: data.txnToken,
                     tokenType: "TXN_TOKEN",
                     amount: totalAmount,
                 },
                 handler: {
-                    notifyMerchant: function(eventName, data){
-                        if(eventName === 'APPROVED') {
+                    notifyMerchant: function (eventName, data) {
+                        if (eventName === 'APPROVED') {
                             // Payment is successful, trigger the Shiprocket order
                             createShiprocketOrder(customerDetails);
                         }
                     }
                 }
-            }).then(function() {
+            }).then(function () {
                 window.Paytm.CheckoutJS.invoke();
-            }).catch(function(error){
+            }).catch(function (error) {
                 console.log("Error invoking Paytm CheckoutJS", error);
             });
         }
     })
     .catch(error => {
-        showError("Error generating transaction token: " + error.message);
+        showError("Error generating subscription: " + error.message);
     });
 }
 
