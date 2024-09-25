@@ -4,83 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cozy Cat Kitchen</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Razorpay JS Library -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="container">
 
     <!-- Header Section with Reduced Banner Height -->
-    <header>
+    <header class="my-4 text-center">
         <div class="header-banner">
-            <img src="images/banner.png" alt="Cozy Cat Kitchen Banner">
+            <img src="images/banner.png" alt="Cozy Cat Kitchen Banner" class="img-fluid" style="max-height: 200px; object-fit: cover;">
         </div>
     </header>
 
     <!-- Product Section Centered -->
-    <section id="products">
-        <div class="product-list-container">
-            <h2>Subscription Products</h2>
-            <div class="product-grid" id="product-list"></div>
+    <section id="products" class="mb-5">
+        <h2 class="text-center mb-4">Subscription Products</h2>
+        <div class="row justify-content-center">
+            <div id="product-list" class="col-md-6 d-flex justify-content-around flex-wrap"></div>
         </div>
     </section>
 
     <!-- Cart Section Centered -->
-    <section id="cart-section">
+    <section id="cart-section" class="text-center mb-5">
         <h2>Your Cart</h2>
-        <div id="cart-list">
+        <div id="cart-list" class="d-inline-block mb-3">
             <p>Your cart is empty.</p>
         </div>
-        <button id="checkout-btn" style="display: none;" onclick="proceedToCheckout()">Proceed to Checkout</button>
+        <button id="checkout-btn" class="btn btn-primary" style="display: none;" onclick="proceedToCheckout()">Proceed to Checkout</button>
     </section>
 
     <!-- Checkout Form -->
-    <section id="checkout-form" style="display: none;">
+    <section id="checkout-form" style="display: none;" class="mb-5">
         <h2>Enter Shipping Details</h2>
-        <form id="form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" required>
+        <form id="form" class="d-grid gap-3">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" class="form-control" required>
+            </div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" required>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
 
-            <label for="phone">Phone:</label>
-            <input type="text" id="phone" required>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" class="form-control" required>
+            </div>
 
-            <label for="address">Address:</label>
-            <input type="text" id="address" required>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" class="form-control" required>
+            </div>
 
-            <label for="subscription-frequency">Subscription Frequency:</label>
-            <select id="subscription-frequency" required>
-                <option value="WEEKLY">Weekly</option>
-                <option value="MONTHLY">Monthly</option>
-            </select>
+            <div class="form-group">
+                <label for="subscription-frequency">Subscription Frequency:</label>
+                <select id="subscription-frequency" class="form-select" required>
+                    <option value="WEEKLY">Weekly</option>
+                    <option value="MONTHLY">Monthly</option>
+                </select>
+            </div>
 
-            <button type="button" onclick="submitForm()">Submit and Pay</button>
+            <button type="button" class="btn btn-success" onclick="submitForm()">Submit and Pay</button>
         </form>
     </section>
 
     <!-- Loading Indicator -->
-    <div id="loading-indicator" style="display: none;">
+    <div id="loading-indicator" class="text-center" style="display: none;">
         <p>Processing your request... Please wait.</p>
     </div>
 
     <!-- Success Modal -->
-    <div id="success-modal" class="modal" style="display: none;" role="dialog" aria-labelledby="success-message">
-        <div class="modal-content">
-            <p id="success-message">Operation successful!</p>
-            <button onclick="closeModal('success-modal')" aria-label="Close Success Modal">Close</button>
+    <div id="success-modal" class="modal fade" tabindex="-1" aria-labelledby="success-message" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <p id="success-message">Operation successful!</p>
+                    <button onclick="closeModal('success-modal')" class="btn btn-success">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Error Modal -->
-    <div id="error-modal" class="modal" style="display: none;" role="dialog" aria-labelledby="error-message">
-        <div class="modal-content">
-            <p id="error-message">An error occurred!</p>
-            <button onclick="closeModal('error-modal')" aria-label="Close Error Modal">Close</button>
+    <div id="error-modal" class="modal fade" tabindex="-1" aria-labelledby="error-message" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <p id="error-message">An error occurred!</p>
+                    <button onclick="closeModal('error-modal')" class="btn btn-danger">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
