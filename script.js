@@ -73,7 +73,7 @@ function displayCart() {
     }
 }
 
-// Proceed to Checkout (Paytm Subscription Integration)
+// Proceed to Checkout (Razorpay Subscription Integration)
 function proceedToCheckout() {
     const totalAmount = calculateTotalAmount();
     const customerDetails = {
@@ -99,8 +99,8 @@ function proceedToCheckout() {
         return;
     }
 
-    // Call your Vercel backend to create a subscription via Paytm
-    fetch('https://cozycatkitchen-backend.vercel.app/create-paytm-subscription', {
+    // Call your Vercel backend to create a subscription via Razorpay
+    fetch('https://cozycatkitchen-backend.vercel.app/create-razorpay-subscription', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -112,30 +112,24 @@ function proceedToCheckout() {
     })
     .then(response => response.json())
     .then(data => {
-        // Handle the Paytm Subscription flow here (like you would for a one-time payment)
-        if (window.Paytm && window.Paytm.CheckoutJS) {
-            window.Paytm.CheckoutJS.init({
-                flow: "DEFAULT",
-                data: {
-                    orderId: data.orderId,
-                    token: data.txnToken,
-                    tokenType: "TXN_TOKEN",
-                    amount: totalAmount,
-                },
-                handler: {
-                    notifyMerchant: function (eventName, data) {
-                        if (eventName === 'APPROVED') {
-                            // Payment is successful, trigger the Shiprocket order
-                            createShiprocketOrder(customerDetails);
-                        }
-                    }
-                }
-            }).then(function () {
-                window.Paytm.CheckoutJS.invoke();
-            }).catch(function (error) {
-                console.log("Error invoking Paytm CheckoutJS", error);
-            });
-        }
+        // Handle the Razorpay Subscription flow here (like you would for a one-time payment)
+        const options = {
+            key: 'YOUR_RAZORPAY_KEY_ID',  // Replace with your Razorpay Key ID
+            subscription_id: data.subscription_id,
+            name: 'Cozy Cat Kitchen',
+            description: 'Subscription Plan',
+            handler: function(response) {
+                // Payment is successful, trigger the Shiprocket order
+                createShiprocketOrder(customerDetails);
+            },
+            prefill: {
+                name: customerDetails.name,
+                email: customerDetails.email,
+                contact: customerDetails.phone
+            }
+        };
+        const rzp = new Razorpay(options);
+        rzp.open();
     })
     .catch(error => {
         showError("Error generating subscription: " + error.message);
