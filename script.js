@@ -75,6 +75,7 @@ function displayCart() {
 
 // Proceed to Checkout (Razorpay Subscription Integration)
 function proceedToCheckout() {
+    document.getElementById('checkout-form').style.display = 'block';
     const totalAmount = calculateTotalAmount();
     const customerDetails = {
         name: document.getElementById('name').value,

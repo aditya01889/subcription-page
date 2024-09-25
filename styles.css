@@ -16,7 +16,7 @@ body {
 .header-banner img {
     width: 100%;
     height: auto;
-    max-height: 300px; /* Reduce the header size */
+    max-height: 200px; /* Reduce the header size */
     object-fit: cover;
 }
 
@@ -25,20 +25,24 @@ body {
     display: flex;
     justify-content: center;
     padding: 20px;
+    flex-wrap: wrap;
 }
 
 .product-grid {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    flex-wrap: wrap;
     gap: 20px; /* Adjust spacing between products */
     width: 100%;
-    max-width: 800px;
+    max-width: 1200px;
 }
 
 /* Product Card Styling */
 .product {
     background-color: white;
     border-radius: 10px;
+    width: 250px;
+    margin: 15px;
     padding: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -62,7 +66,7 @@ body {
 
 .product-quantity {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
 }
@@ -73,7 +77,7 @@ body {
 }
 
 .product-quantity input {
-    width: 40px;
+    width: 50px;
     text-align: center;
     margin: 0 10px;
 }
@@ -81,11 +85,17 @@ body {
 /* Cart Section Styling */
 #cart-section {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 }
 
 #cart-list {
     margin-bottom: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
 }
 
 /* Checkout Button Styling */
@@ -97,6 +107,7 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 20px;
 }
 
 #checkout-btn:hover {
