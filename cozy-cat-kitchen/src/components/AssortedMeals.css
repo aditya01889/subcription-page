@@ -14,12 +14,12 @@
   justify-content: center;
 }
 
-.meals-header h2 {
+.assorted-meals-card h2 {
   font-family: 'Fatcat', sans-serif;
-  font-size: 32px;
+  font-size: 24px;
 }
 
-.meals-header p {
+.assorted-meals-card p {
   font-family: 'Arial', sans-serif;
   font-size: 18px;
 }
@@ -31,14 +31,15 @@
   margin-top: 40px;
 }
 
-.meals-info ul {
+.assorted-meals-card ul {
   list-style: none;
   padding: 0;
 }
 
-.meals-info li {
+.assorted-meals-card li {
   font-family: 'Arial', sans-serif;
   font-size: 18px;
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 

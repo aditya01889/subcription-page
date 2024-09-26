@@ -14,7 +14,7 @@ const AssortedMeals = () => {
           <li>🐾 Supreme (Chicken, Liver, Pumpkin, Oats)</li>
           <li>🐾 1 Broth Pack (100ml) Essence (Chicken Broth) or Bone Rich (Bone Broth)</li>
         </ul>
-        <img src="/images/product-bundle.png" alt="Product Bundle" className="product-bundle-image" />
+        <img src={`${process.env.PUBLIC_URL}/images/product-bundle.png`} alt="Product Bundle" className="product-bundle-image" />
       </div>
      </div> 
   );

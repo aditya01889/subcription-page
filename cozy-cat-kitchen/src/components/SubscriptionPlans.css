@@ -1,42 +1,48 @@
-
 .subscription-section {
   background: linear-gradient(135deg, #ff9a00, #f15a24);
   padding: 50px 0;
   text-align: center;
 }
 
+/* Title logo styling */
 .subscription-section .title-logo {
-  width: 120px;
-  margin: 20px 0;
+  width: 180px;
+  margin: 0 auto 20px;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
+/* Box icon styling */
 .box-icon {
   width: 80px;
   height: auto;
 }
 
+/* Position for top-left icon */
 .top-left {
   position: absolute;
   top: -50px;
   left: -100px;
 }
 
+/* Position for top-right icon */
 .top-right {
   position: absolute;
   top: -50px;
   right: -100px;
 }
 
+/* Subscription plan cards container */
 .subscription-plans {
   display: flex;
   justify-content: center;
   gap: 50px;
   margin-top: 100px;
+  flex-wrap: wrap; /* For mobile responsiveness */
 }
 
+/* Individual plan card */
 .plan-card {
   background-color: #fff;
   padding: 30px;
@@ -44,13 +50,16 @@
   width: 300px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   text-align: left;
+  position: relative;
 }
 
+/* Box icon inside the card */
 .plan-card img.box-icon {
-  width: 60px;
+  width: 100px;
   margin-bottom: 20px;
 }
 
+/* Plan name styling */
 .plan-card h3 {
   font-family: 'Fatcat', sans-serif;
   font-size: 22px;
@@ -58,6 +67,7 @@
   margin-bottom: 10px;
 }
 
+/* Price styling */
 .plan-card .price {
   font-family: 'Arial', sans-serif;
   font-size: 20px;
@@ -66,12 +76,14 @@
   margin-bottom: 15px;
 }
 
+/* Grey line below price */
 .card-line {
   border-bottom: 1px solid #e0e0e0; /* Light grey line */
   width: 90%; /* Adjust the width */
   margin: 10px auto; /* Center it with auto */
 }
 
+/* Unordered list styling */
 .plan-card ul {
   font-family: 'Arial', sans-serif;
   list-style: none;
@@ -84,11 +96,15 @@
   color: #555;
 }
 
+/* Quantity buttons and input styling */
 .quantity-buttons {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 15px 0;
+  width: 150px; /* Matches Buy Now button width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .quantity-buttons button {
@@ -99,13 +115,21 @@
   padding: 5px 10px;
   border-radius: 50%;
   cursor: pointer;
+  width: 40px; /* Fixed width for buttons */
+  height: 40px; /* Fixed height for buttons */
 }
 
-.quantity-buttons span {
-  padding: 0 15px;
+.quantity-buttons input {
+  width: 50px; /* Less wide input field */
+  text-align: center;
   font-size: 18px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 0 10px;
 }
 
+/* Buy Now button */
 .buy-now-button {
   display: block;
   margin: 20px auto; /* Centers the button horizontally */
@@ -115,8 +139,26 @@
   border-radius: 50px;
   font-weight: bold;
   font-size: 16px;
+  width: 150px; /* Same width as the quantity controls */
 }
 
 .buy-now-button:hover {
   background-color: #0d8a4f;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 600px) {
+  .plan-card {
+    width: 80%; /* Make cards more narrow on smaller screens */
+    margin: 20px auto;
+  }
+
+  .buy-now-button,
+  .quantity-buttons {
+    width: 100%; /* Full width buttons on mobile */
+  }
+
+  .subscription-plans {
+    flex-direction: column;
+  }
 }
