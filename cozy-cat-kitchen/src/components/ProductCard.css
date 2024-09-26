@@ -1,0 +1,92 @@
+/* Main product card styling */
+.product-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20x;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+    margin: 20px auto;
+    position: relative;
+  }
+  
+  /* Product Image */
+  .product-image {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+  }
+  
+  /* Product Name */
+  .product-name {
+    font-family: 'Fat Cat', sans-serif;
+    font-size: 20px;
+    color: #003b00;
+    margin-bottom: 10px;
+  }
+  
+  /* Product Price */
+  .product-price {
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  /* Product Details (list of features) */
+  .product-details {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .product-details li {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #666;
+  }
+  
+  /* Quantity controls (for adding product quantity) */
+  .quantity-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .quantity-btn {
+    background-color: #003b00;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .quantity-input {
+    width: 40px;
+    text-align: center;
+    font-size: 16px;
+    margin: 0 10px;
+  }
+  
+  /* Buy Now button */
+  .buy-now-btn {
+    background-color: #003b00;
+    color: white;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .buy-now-btn:hover {
+    background-color: #002b00;
+  }
+  

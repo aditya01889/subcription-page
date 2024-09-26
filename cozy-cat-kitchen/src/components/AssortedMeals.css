@@ -1,0 +1,47 @@
+
+.assorted-meals-section {
+  padding: 50px 0;
+  text-align: left;
+}
+
+.assorted-meals-card {
+  background-color: #fff;
+  padding: 30px;
+  margin: auto;
+  border-radius: 20px;
+  width: 600px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+}
+
+.meals-header h2 {
+  font-family: 'Fatcat', sans-serif;
+  font-size: 32px;
+}
+
+.meals-header p {
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+}
+
+.meals-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.meals-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.meals-info li {
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.meals-image img {
+  width: 400px;
+}

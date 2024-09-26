@@ -1,0 +1,73 @@
+/* Header container */
+.header {
+  text-align: center;
+  padding: 20px;
+  background-color: #FFFFFF;
+}
+
+/* Font styling for titles */
+.header-title, .footer-title {
+  font-family: 'FatCat', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  margin: 20px 0;
+  color: #00473e;
+}
+
+/* Logo styling */
+.logo {
+  width: 120px;
+  margin: 20px 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Join subscription box */
+.join-box {
+  border-radius: 50px;
+  padding: 30px;
+  background-color: #FFFFFF;
+  width: 25%;
+  margin: 0 auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.join-box h2 {
+  font-family: 'FatCat', sans-serif;
+  font-size: 30px;
+  color: #00473e;
+}
+
+.join-box p {
+  font-family: 'Arial', sans-serif;
+  font-size: 15px;
+  color: #475d5b;
+  margin: 10px 0;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+/* Scroll button styling */
+.scroll-button {
+  background-color: #FAAE2B;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  color: #00473e;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.scroll-button:hover {
+  background-color: #FFFF0F;
+}
+
+/* Footer title styling */
+.footer-title {
+  margin-top: 40px;
+  border-top: 2px solid #003b00;
+  padding-top: 20px;
+}
