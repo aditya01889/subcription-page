@@ -1,105 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cozy Cat Kitchen</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="container">
 
-    <!-- Header Section with Reduced Banner Height -->
-    <header class="my-4 text-center">
-        <div class="header-banner">
-            <img src="images/banner.png" alt="Cozy Cat Kitchen Banner" class="img-fluid" style="max-height: 200px; object-fit: cover;">
-        </div>
-    </header>
+<body>
 
-    <!-- Product Section Centered -->
-    <section id="products" class="mb-5">
-        <h2 class="text-center mb-4">Subscription Products</h2>
-        <div class="row justify-content-center">
-            <div id="product-list" class="col-md-6 d-flex justify-content-around flex-wrap"></div>
+    <!-- First Section (Banner with Scroll Down CTA) -->
+    <section class="section-banner">
+        <div class="banner-content">
+            <img src="images/logo.png" alt="Cozy Kitchen Logo" class="logo">
+            <h1>JOIN THE COZY CAT KITCHEN SUBSCRIPTION!</h1>
+            <p>Get fresh, nutritious meals delivered weekly for your cats & kittens.</p>
+            <a href="#subscription-section" class="scroll-down-btn">
+                <button class="btn-primary">Scroll down to Learn More <span class="arrow">↓</span></button>
+            </a>
         </div>
     </section>
 
-    <!-- Cart Section Centered -->
-    <section id="cart-section" class="text-center mb-5">
-        <h2>Your Cart</h2>
-        <div id="cart-list" class="d-inline-block mb-3">
-            <p>Your cart is empty.</p>
+    <!-- Second Section (Subscription Information) -->
+    <section id="subscription-section" class="subscription-section">
+        <div class="subscription-container">
+            <h2>Subscriptions Available</h2>
+            <div class="subscription-card kitten-card">
+                <h3>Kitten Subscription</h3>
+                <p>₹1499 / Week</p>
+                <ul>
+                    <li>21 Meals (70 gm each)</li>
+                    <li>1 Broth Pack (100 ml)</li>
+                    <li>3 Meals a Day</li>
+                    <li>Free Weekly Delivery</li>
+                    <li>Save ₹210/week</li>
+                </ul>
+                <button onclick="buyNow('kitten')">Buy Now</button>
+            </div>
+
+            <div class="subscription-card cat-card">
+                <h3>Cat Subscription</h3>
+                <p>₹1799 / Week</p>
+                <ul>
+                    <li>28 Meals (70 gm each)</li>
+                    <li>2 Broth Packs (100 ml each)</li>
+                    <li>4 Meals a Day</li>
+                    <li>Free Weekly Delivery</li>
+                    <li>Save ₹280/week</li>
+                </ul>
+                <button onclick="buyNow('cat')">Buy Now</button>
+            </div>
         </div>
-        <button id="checkout-btn" class="btn btn-primary" style="display: none;" onclick="proceedToCheckout()">Proceed to Checkout</button>
+
+        <!-- Assorted Meals Section -->
+        <div class="assorted-section">
+            <h3>Assorted Meals and Broth</h3>
+            <ul>
+                <li>Nourish (Chicken, Pumpkin, Rice)</li>
+                <li>Power (Chicken, Liver, Pumpkin, Rice)</li>
+                <li>Vitality (Chicken, Pumpkin, Oats)</li>
+                <li>Supreme (Chicken, Liver, Pumpkin, Oats)</li>
+                <li>1 Broth Pack (100ml)</li>
+            </ul>
+        </div>
     </section>
 
-    <!-- Checkout Form -->
-    <section id="checkout-form" style="display: none;" class="mb-5">
-        <h2>Enter Shipping Details</h2>
-        <form id="form" class="d-grid gap-3">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="phone">Phone:</label>
-                <input type="text" id="phone" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="address">Address:</label>
-                <input type="text" id="address" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="subscription-frequency">Subscription Frequency:</label>
-                <select id="subscription-frequency" class="form-select" required>
-                    <option value="WEEKLY">Weekly</option>
-                    <option value="MONTHLY">Monthly</option>
-                </select>
-            </div>
-
-            <button type="button" class="btn btn-success" onclick="submitForm()">Submit and Pay</button>
-        </form>
-    </section>
-
-    <!-- Loading Indicator -->
-    <div id="loading-indicator" class="text-center" style="display: none;">
-        <p>Processing your request... Please wait.</p>
-    </div>
-
-    <!-- Success Modal -->
-    <div id="success-modal" class="modal fade" tabindex="-1" aria-labelledby="success-message" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <p id="success-message">Operation successful!</p>
-                    <button onclick="closeModal('success-modal')" class="btn btn-success">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Error Modal -->
-    <div id="error-modal" class="modal fade" tabindex="-1" aria-labelledby="error-message" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <p id="error-message">An error occurred!</p>
-                    <button onclick="closeModal('error-modal')" class="btn btn-danger">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
