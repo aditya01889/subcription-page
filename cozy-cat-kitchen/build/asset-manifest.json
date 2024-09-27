@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/cozycatkitchen/static/css/main.532b86c6.css",
+    "main.js": "/cozycatkitchen/static/js/main.243f9c5b.js",
+    "static/js/453.eca14e8c.chunk.js": "/cozycatkitchen/static/js/453.eca14e8c.chunk.js",
+    "index.html": "/cozycatkitchen/index.html",
+    "main.532b86c6.css.map": "/cozycatkitchen/static/css/main.532b86c6.css.map",
+    "main.243f9c5b.js.map": "/cozycatkitchen/static/js/main.243f9c5b.js.map",
+    "453.eca14e8c.chunk.js.map": "/cozycatkitchen/static/js/453.eca14e8c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.532b86c6.css",
+    "static/js/main.243f9c5b.js"
+  ]
+}
