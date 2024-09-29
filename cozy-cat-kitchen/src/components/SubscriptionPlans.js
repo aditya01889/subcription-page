@@ -67,7 +67,7 @@ const SubscriptionPlans = () => {
   const handleFormSubmit = async (formData) => {
     try {
       const promises = cart.map(async (item) => {
-        const razorpayResponse = await axios.post(`${config.backendUrl}/create-razorpay-subscription`, {
+        const razorpayResponse = await axios.post(`${config.backendUrl}/create-razorpay-subscriptions`, {
           planId: subscriptions.find(sub => sub.name === item.name).planId,
           email: formData.email,
           phone: formData.phone
