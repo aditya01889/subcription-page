@@ -71,3 +71,63 @@
   border-top: 1px solid #003b00;
   padding-top: 20px;
 }
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .join-box {
+    width: 40%; /* Increase the width for tablet-sized devices */
+  }
+
+  .join-box h2 {
+    font-size: 24px; /* Adjust heading font size for tablets */
+  }
+
+  .join-box p {
+    font-size: 14px; /* Adjust text font size for tablets */
+  }
+
+  .scroll-button {
+    padding: 8px 16px; /* Adjust button size for tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 100px; /* Adjust logo size for mobile */
+  }
+
+  .join-box {
+    width: 60%; /* Adjust width for mobile */
+  }
+
+  .join-box h2 {
+    font-size: 22px; /* Adjust heading font size for mobile */
+  }
+
+  .join-box p {
+    font-size: 13px; /* Adjust text font size for mobile */
+  }
+
+  .scroll-button {
+    padding: 8px 14px; /* Adjust button padding for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .join-box {
+    width: 80%; /* Adjust width for smaller mobile devices */
+  }
+
+  .join-box h2 {
+    font-size: 20px; /* Further reduce heading size */
+  }
+
+  .join-box p {
+    font-size: 12px; /* Reduce text font size */
+  }
+
+  .scroll-button {
+    padding: 6px 12px; /* Further reduce button padding */
+    font-size: 14px;
+  }
+}

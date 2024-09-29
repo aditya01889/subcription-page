@@ -9,8 +9,6 @@
   width: 180px;
   margin: 0 auto 20px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* Box icon styling */
@@ -51,6 +49,19 @@
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   text-align: left;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Align kitten subscription image on the left */
+.plan-card.kitten-subscription img.box-icon {
+  align-self: flex-start;
+}
+
+/* Align cat subscription image on the right */
+.plan-card.cat-subscription img.box-icon {
+  align-self: flex-end;
 }
 
 /* Box icon inside the card */
@@ -78,9 +89,9 @@
 
 /* Grey line below price */
 .card-line {
-  border-bottom: 1px solid #e0e0e0; /* Light grey line */
-  width: 90%; /* Adjust the width */
-  margin: 10px auto; /* Center it with auto */
+  border-bottom: 1px solid #e0e0e0;
+  width: 90%;
+  margin: 10px auto;
 }
 
 /* Unordered list styling */
@@ -115,12 +126,12 @@
   padding: 5px 10px;
   border-radius: 50%;
   cursor: pointer;
-  width: 40px; /* Fixed width for buttons */
-  height: 40px; /* Fixed height for buttons */
+  width: 40px;
+  height: 40px;
 }
 
 .quantity-buttons input {
-  width: 50px; /* Less wide input field */
+  width: 50px;
   text-align: center;
   font-size: 18px;
   padding: 5px;
@@ -132,14 +143,14 @@
 /* Buy Now button */
 .buy-now-button {
   display: block;
-  margin: 20px auto; /* Centers the button horizontally */
-  background-color: #006400; /* Dark green */
+  margin: 20px auto;
+  background-color: #006400;
   color: white;
   padding: 10px 20px;
   border-radius: 50px;
   font-weight: bold;
   font-size: 16px;
-  width: 150px; /* Same width as the quantity controls */
+  width: 150px;
 }
 
 .buy-now-button:hover {
@@ -149,7 +160,7 @@
 /* Mobile responsive styles */
 @media (max-width: 600px) {
   .plan-card {
-    width: 80%; /* Make cards more narrow on smaller screens */
+    width: 90%; /* Make cards more narrow on smaller screens */
     margin: 20px auto;
   }
 
@@ -160,5 +171,28 @@
 
   .subscription-plans {
     flex-direction: column;
+  }
+
+  .subscription-section .title-logo {
+    width: 150px; /* Adjust logo size for mobile */
+  }
+
+  .plan-card h3 {
+    font-size: 20px; /* Adjust heading size for mobile */
+  }
+
+  .plan-card ul li {
+    font-size: 16px; /* Adjust list text size for mobile */
+  }
+}
+
+@media (max-width: 768px) {
+  .plan-card {
+    width: 80%; /* Adjust card width for tablet */
+  }
+
+  .buy-now-button,
+  .quantity-buttons {
+    width: 100%; /* Full width buttons on tablets */
   }
 }

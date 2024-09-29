@@ -1,0 +1,40 @@
+.error-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);  /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;  /* This centers the modal vertically */
+  z-index: 1000;
+}
+
+.error-modal {
+  width: 400px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  text-align: center;
+  z-index: 1001;
+}
+
+.error-modal-content {
+  padding: 20px;
+}
+
+.close-button {
+  background-color: #00473e;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.close-button:hover {
+  background-color: #fa7f00;
+}

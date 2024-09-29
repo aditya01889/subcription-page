@@ -1,54 +1,90 @@
 /* Delivery Form Modal */
 .delivery-modal {
-    background-color: #FFFFFF;
-    padding: 20px;
-    border-radius: 20px;
-    max-width: 400px;
-    margin: auto;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    text-align: left;
+  background-color: #FFFFFF;
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: left;
+}
+
+.delivery-modal h2 {
+  font-family: 'FatCat', sans-serif;
+  font-size: 24px;
+  color: #00473e;
+  margin-bottom: 20px;
+}
+
+.delivery-modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.delivery-modal label {
+  margin-bottom: 10px;
+  font-family: 'Arial', sans-serif;
+  color: #475d5b;
+  font-size: 16px;
+}
+
+.delivery-modal input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.delivery-modal button {
+  background-color: #00473e;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.delivery-modal button:hover {
+  background-color: #fa7f00;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .delivery-modal {
+      max-width: 90%; /* Adjust modal width on smaller screens */
+      padding: 15px; /* Reduce padding for mobile */
   }
-  
+
   .delivery-modal h2 {
-    font-family: 'FatCat', sans-serif;
-    font-size: 24px;
-    color: #00473e;
-    margin-bottom: 20px;
+      font-size: 20px; /* Adjust font size for mobile */
   }
-  
-  .delivery-modal form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .delivery-modal label {
-    margin-bottom: 10px;
-    font-family: 'Arial', sans-serif;
-    color: #475d5b;
-    font-size: 16px;
-  }
-  
+
   .delivery-modal input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-size: 16px;
-    width: 100%;
-    box-sizing: border-box;
+      font-size: 14px; /* Reduce input field font size */
+      padding: 8px; /* Reduce padding for smaller screens */
   }
-  
+
   .delivery-modal button {
-    background-color: #00473e;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 30px;
-    font-size: 16px;
-    cursor: pointer;
+      font-size: 14px; /* Reduce button font size */
+      padding: 8px 15px; /* Reduce button padding */
   }
-  
-  .delivery-modal button:hover {
-    background-color: #fa7f00;
+}
+
+@media (max-width: 480px) {
+  .delivery-modal h2 {
+      font-size: 18px; /* Further reduce heading size for small mobile screens */
   }
-  
+
+  .delivery-modal input {
+      font-size: 12px; /* Further reduce input field font size */
+  }
+
+  .delivery-modal button {
+      font-size: 12px; /* Further reduce button font size */
+      padding: 6px 10px; /* Reduce button padding for smaller screens */
+  }
+}

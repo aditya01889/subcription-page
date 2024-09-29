@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './SubscriptionPlans.css';
 import DeliveryForm from './DeliveryForm';
+import { useError } from '../ErrorContext';  // Using the useError hook for global error handling
 import axios from 'axios';
+import config from '../config';  // Import the config file
 
 const subscriptions = [
   {
@@ -13,7 +15,7 @@ const subscriptions = [
     delivery: 'Free Weekly Delivery',
     savings: 'Save ₹201/week',
     image: `${process.env.PUBLIC_URL}/images/kitten-box.png`,
-    planId: 'plan_P16C8fYlOuifli' // Replace with actual Razorpay Plan ID
+    planId: 'plan_P16C8fYlOuifli'  // Razorpay Plan ID
   },
   {
     name: 'Cat Subscription',
@@ -24,54 +26,70 @@ const subscriptions = [
     delivery: 'Free Weekly Delivery',
     savings: 'Save ₹261/week',
     image: `${process.env.PUBLIC_URL}/images/cat-box.png`,
-    planId: 'plan_P16CnSJeddGUF3' // Replace with actual Razorpay Plan ID
+    planId: 'plan_P16CnSJeddGUF3'  // Razorpay Plan ID
   }
 ];
 
 const SubscriptionPlans = () => {
-  const [quantities, setQuantities] = useState([1, 1]);  // Quantity for both subscriptions
+  const [quantities, setQuantities] = useState([0, 0]);  // Allow zero quantities for both subscriptions
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [cart, setCart] = useState([]);
+  const { showError, clearError } = useError();  // Use the useError hook for error handling
 
-  const handleBuyNow = (subscription) => {
-    setSelectedPlan(subscription);
-    setIsModalOpen(true);
+  const updateCart = () => {
+    const newCart = subscriptions
+      .map((subscription, index) => ({
+        name: subscription.name,
+        sku: `SUB_${subscription.name.replace(/\s/g, '_').toUpperCase()}`,
+        price: subscription.price,
+        quantity: quantities[index]
+      }))
+      .filter(item => item.quantity > 0);  // Filter out items with zero quantity
+
+    if (newCart.length === 0) {
+      showError('Please select at least one item to proceed.');
+      return;
+    }
+
+    setCart(newCart);
+    clearError();  // Clear any existing errors
+    setIsModalOpen(true);  // Open the delivery form modal
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleQuantityChange = (index, value) => {
+    setQuantities(prev => {
+      const newQuantities = [...prev];
+      newQuantities[index] = Math.max(0, Number(value));  // Ensure quantity can't be negative
+      return newQuantities;
+    });
   };
 
   const handleFormSubmit = async (formData) => {
     try {
-      // Step 1: Create Razorpay subscription
-      const razorpayResponse = await axios.post('/create-razorpay-subscription', {
-        planId: selectedPlan.planId,
-        email: formData.email,
-        phone: formData.phone
+      const promises = cart.map(async (item) => {
+        const razorpayResponse = await axios.post(`${config.backendUrl}/create-razorpay-subscription`, {
+          planId: subscriptions.find(sub => sub.name === item.name).planId,
+          email: formData.email,
+          phone: formData.phone
+        });
+
+        return razorpayResponse.data.subscription_id;
       });
 
-      const { subscription_id } = razorpayResponse.data;
+      const subscriptionIds = await Promise.all(promises);
 
-      // Step 2: Razorpay Checkout
       const options = {
-        key: 'YOUR_RAZORPAY_KEY_ID',
-        subscription_id: subscription_id,
+        key: config.razorpayKey,  // Use key from config
+        subscription_id: subscriptionIds[0],  // Using the first subscription ID
         name: 'Cozy Cat Kitchen',
-        description: selectedPlan.name,
+        description: cart.map(item => item.name).join(', '),
         handler: function (response) {
-          alert('Payment Successful!');
-          // Shiprocket order creation
-          axios.post('/create-shiprocket-order', {
+          axios.post(`${config.backendUrl}/create-shiprocket-order`, {
             ...formData,
-            cart: [
-              {
-                name: selectedPlan.name,
-                sku: `SUB_${selectedPlan.name.replace(/\s/g, '_').toUpperCase()}`,
-                price: selectedPlan.price,
-                quantity: quantities[selectedPlan.index]
-              }
-            ]
+            cart: cart
+          }).catch(err => {
+            console.error('Error creating Shiprocket order:', err);
+            showError('Order creation failed. Please try again.');
           });
         },
         prefill: {
@@ -88,7 +106,7 @@ const SubscriptionPlans = () => {
       rzp.open();
     } catch (error) {
       console.error('Error processing payment:', error);
-      alert('Payment failed, please try again.');
+      showError('Payment failed, please try again.');
     }
 
     setIsModalOpen(false);
@@ -99,7 +117,7 @@ const SubscriptionPlans = () => {
       <img src={`${process.env.PUBLIC_URL}/images/logo-white.png`} alt="Cozy Cat Kitchen Logo" className="title-logo" />
       <div className="subscription-plans">
         {subscriptions.map((subscription, index) => (
-          <div key={index} className="plan-card">
+          <div key={index} className={`plan-card ${subscription.name.toLowerCase().includes('kitten') ? 'kitten-subscription' : 'cat-subscription'}`}>
             <img src={subscription.image} alt={subscription.name} className="box-icon" />
             <h3>{subscription.name}</h3>
             <p>₹{subscription.price} / week</p>
@@ -112,32 +130,22 @@ const SubscriptionPlans = () => {
               <li>🐾 {subscription.savings}</li>
             </ul>
             <div className="quantity-buttons">
-              <button onClick={() => setQuantities(prev => {
-                const newQuantities = [...prev];
-                newQuantities[index] = Math.max(1, newQuantities[index] - 1);
-                return newQuantities;
-              })}>-</button>
+              <button onClick={() => handleQuantityChange(index, quantities[index] - 1)}>-</button>
               <input
                 type="number"
                 value={quantities[index]}
-                onChange={(e) => setQuantities(prev => {
-                  const newQuantities = [...prev];
-                  newQuantities[index] = Math.max(1, Number(e.target.value));
-                  return newQuantities;
-                })}
-                min="1"
+                onChange={(e) => handleQuantityChange(index, e.target.value)}
+                min="0"
               />
-              <button onClick={() => setQuantities(prev => {
-                const newQuantities = [...prev];
-                newQuantities[index] += 1;
-                return newQuantities;
-              })}>+</button>
+              <button onClick={() => handleQuantityChange(index, quantities[index] + 1)}>+</button>
             </div>
-            <button className="buy-now-button" onClick={() => handleBuyNow(subscription)}>Buy Now</button>
           </div>
         ))}
       </div>
-      <DeliveryForm isOpen={isModalOpen} onRequestClose={handleCloseModal} onSubmit={handleFormSubmit} />
+      <button className="buy-now-button" onClick={updateCart}>
+        Buy Now
+      </button>
+      <DeliveryForm isOpen={isModalOpen} onRequestClose={() => setIsModalOpen(false)} onSubmit={handleFormSubmit} cart={cart} />
     </section>
   );
 };

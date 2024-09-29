@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import './DeliveryForm.css';
+import { useError } from '../ErrorContext';  // Import the useError hook
 
 Modal.setAppElement('#root');  // Set the root element for accessibility
 
-const DeliveryForm = ({ isOpen, onRequestClose, onSubmit }) => {
+const DeliveryForm = ({ isOpen, onRequestClose, onSubmit, cart }) => {
   const [formData, setFormData] = useState({
     name: '',
     address: '',
     email: '',
     phone: ''
   });
+
+  const { showError, clearError } = useError();  // Get the showError and clearError functions from useError
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,7 +22,27 @@ const DeliveryForm = ({ isOpen, onRequestClose, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    
+    // Validate form inputs
+    if (!formData.name || !formData.address || !formData.email || !formData.phone) {
+      showError('Please fill out all fields.');  // Show error if form is incomplete
+      return;
+    }
+
+    // Check if cart has any items
+    if (cart.length === 0) {
+      showError('Your cart is empty. Please add some items to your cart.');  // Show error if cart is empty
+      return;
+    }
+    
+    // Clear any existing errors when proceeding
+    clearError();
+
+    // Pass the form data along with the cart to the parent component
+    onSubmit({
+      ...formData,
+      cart  // Include the cart with all selected products and quantities
+    });
   };
 
   return (
