@@ -66,17 +66,13 @@ const SubscriptionPlans = () => {
 
   const handleFormSubmit = async (formData) => {
     try {
-      const promises = cart.map(async (item) => {
-        const razorpayResponse = await axios.post(`${config.backendUrl}/create-razorpay-subscriptions`, {
-          planId: subscriptions.find(sub => sub.name === item.name).planId,
-          email: formData.email,
-          phone: formData.phone
-        });
-
-        return razorpayResponse.data.subscription_id;
+      const razorpayResponse = await axios.post(`${config.backendUrl}/create-razorpay-subscriptions`, {
+        cart: cart,  // Sending the full cart to the backend
+        email: formData.email,
+        phone: formData.phone
       });
 
-      const subscriptionIds = await Promise.all(promises);
+      const subscriptionIds = razorpayResponse.data.subscriptionIds.map(item => item.subscriptionId);
 
       const options = {
         key: config.razorpayKey,  // Use key from config
