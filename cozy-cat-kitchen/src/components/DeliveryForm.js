@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Modal from 'react-modal';
 import './DeliveryForm.css';
 import { useError } from '../ErrorContext';  // Import the useError hook
+import { debounce } from 'lodash';  // Debouncing with lodash
 
 Modal.setAppElement('#root');  // Set the root element for accessibility
 
@@ -15,9 +16,14 @@ const DeliveryForm = ({ isOpen, onRequestClose, onSubmit, cart }) => {
 
   const { showError, clearError } = useError();  // Get the showError and clearError functions from useError
 
+  // Debounce the input change to avoid excessive re-rendering
+  const debouncedHandleChange = useCallback(debounce((name, value) => {
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  }, 300), []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    debouncedHandleChange(name, value);  // Use debounced change handler
   };
 
   const handleSubmit = (e) => {
@@ -49,21 +55,53 @@ const DeliveryForm = ({ isOpen, onRequestClose, onSubmit, cart }) => {
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="delivery-modal">
       <h2>Delivery Details</h2>
       <form onSubmit={handleSubmit}>
-        <label>
+        <label htmlFor="name">
           Name:
-          <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+          <input 
+            id="name"
+            type="text" 
+            name="name" 
+            value={formData.name} 
+            onChange={handleChange} 
+            aria-label="Enter your name"
+            required 
+          />
         </label>
-        <label>
+        <label htmlFor="address">
           Address:
-          <input type="text" name="address" value={formData.address} onChange={handleChange} required />
+          <input 
+            id="address"
+            type="text" 
+            name="address" 
+            value={formData.address} 
+            onChange={handleChange} 
+            aria-label="Enter your address"
+            required 
+          />
         </label>
-        <label>
+        <label htmlFor="email">
           Email:
-          <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+          <input 
+            id="email"
+            type="email" 
+            name="email" 
+            value={formData.email} 
+            onChange={handleChange} 
+            aria-label="Enter your email"
+            required 
+          />
         </label>
-        <label>
+        <label htmlFor="phone">
           Phone:
-          <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required />
+          <input 
+            id="phone"
+            type="tel" 
+            name="phone" 
+            value={formData.phone} 
+            onChange={handleChange} 
+            aria-label="Enter your phone number"
+            required 
+          />
         </label>
         <button type="submit">Proceed to Payment</button>
       </form>

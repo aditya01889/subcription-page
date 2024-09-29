@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import './SubscriptionPlans.css';
 import DeliveryForm from './DeliveryForm';
 import { useError } from '../ErrorContext';  // Using the useError hook for global error handling
@@ -14,7 +14,7 @@ const subscriptions = [
     mealsPerDay: '3 Meals a Day',
     delivery: 'Free Weekly Delivery',
     savings: 'Save ₹201/week',
-    image: `${process.env.PUBLIC_URL}/images/kitten-box.png`,
+    image: `${process.env.PUBLIC_URL}/images/kitten-box.webp`,
     planId: 'plan_P16C8fYlOuifli'  // Razorpay Plan ID
   },
   {
@@ -25,7 +25,7 @@ const subscriptions = [
     mealsPerDay: '4 Meals a Day',
     delivery: 'Free Weekly Delivery',
     savings: 'Save ₹261/week',
-    image: `${process.env.PUBLIC_URL}/images/cat-box.png`,
+    image: `${process.env.PUBLIC_URL}/images/cat-box.webp`,
     planId: 'plan_P16CnSJeddGUF3'  // Razorpay Plan ID
   }
 ];
@@ -36,13 +36,15 @@ const SubscriptionPlans = () => {
   const [cart, setCart] = useState([]);
   const { showError, clearError } = useError();  // Use the useError hook for error handling
 
-  const updateCart = () => {
+  // useCallback for memoizing functions and improving performance
+  const updateCart = useCallback(() => {
     const newCart = subscriptions
       .map((subscription, index) => ({
         name: subscription.name,
         sku: `SUB_${subscription.name.replace(/\s/g, '_').toUpperCase()}`,
         price: subscription.price,
-        quantity: quantities[index]
+        quantity: quantities[index],
+        planId: subscription.planId  // Ensure plan_id is included
       }))
       .filter(item => item.quantity > 0);  // Filter out items with zero quantity
 
@@ -54,20 +56,20 @@ const SubscriptionPlans = () => {
     setCart(newCart);
     clearError();  // Clear any existing errors
     setIsModalOpen(true);  // Open the delivery form modal
-  };
+  }, [quantities, showError, clearError]);
 
-  const handleQuantityChange = (index, value) => {
+  const handleQuantityChange = useCallback((index, value) => {
     setQuantities(prev => {
       const newQuantities = [...prev];
       newQuantities[index] = Math.max(0, Number(value));  // Ensure quantity can't be negative
       return newQuantities;
     });
-  };
+  }, []);
 
   const handleFormSubmit = async (formData) => {
     try {
       const razorpayResponse = await axios.post(`${config.backendUrl}/create-razorpay-subscriptions`, {
-        cart: cart,  // Sending the full cart to the backend
+        cart: cart,  // Sending the full cart to the backend, including planId
         email: formData.email,
         phone: formData.phone
       });
@@ -110,11 +112,11 @@ const SubscriptionPlans = () => {
 
   return (
     <section id="subscription-plans" className="subscription-section">
-      <img src={`${process.env.PUBLIC_URL}/images/logo-white.png`} alt="Cozy Cat Kitchen Logo" className="title-logo" />
+      <img src={`${process.env.PUBLIC_URL}/images/logo-white.webp`} alt="Cozy Cat Kitchen Logo" className="title-logo" loading="lazy" />
       <div className="subscription-plans">
         {subscriptions.map((subscription, index) => (
           <div key={index} className={`plan-card ${subscription.name.toLowerCase().includes('kitten') ? 'kitten-subscription' : 'cat-subscription'}`}>
-            <img src={subscription.image} alt={subscription.name} className="box-icon" />
+            <img src={subscription.image} alt={subscription.name} className="box-icon" loading="lazy" />
             <h3>{subscription.name}</h3>
             <p>₹{subscription.price} / week</p>
             <div className="card-line"></div>

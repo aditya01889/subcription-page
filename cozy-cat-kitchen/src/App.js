@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import './App.css';
 import Header from './components/Header';
-import SubscriptionPlans from './components/SubscriptionPlans';
-import AssortedMeals from './components/AssortedMeals';
-import ErrorModal from './components/ErrorModal';  // Import ErrorModal
+import ErrorModal from './components/ErrorModal';  // Error modal will always load
+
+// Lazy load other components
+const SubscriptionPlans = React.lazy(() => import('./components/SubscriptionPlans'));
+const AssortedMeals = React.lazy(() => import('./components/AssortedMeals'));
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <SubscriptionPlans />
-      <AssortedMeals />
+      <Suspense fallback={<div>Loading...</div>}>
+        <SubscriptionPlans />
+        <AssortedMeals />
+      </Suspense>
 
       {/* Render ErrorModal without props; it uses the context */}
       <ErrorModal />
