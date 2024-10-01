@@ -19,6 +19,7 @@
   padding: 20px;
   text-align: center;
   z-index: 1001;
+  animation: fadeIn 0.3s ease-in-out;  /* Smooth fade-in animation */
 }
 
 .error-modal-content {
@@ -33,8 +34,21 @@
   border-radius: 5px;
   cursor: pointer;
   margin-top: 20px;
+  transition: background-color 0.3s ease;  /* Smooth hover transition */
 }
 
 .close-button:hover {
-  background-color: #fa7f00;
+  background-color: #fa7f00;  /* Color change on hover */
+}
+
+/* Smooth fade-in animation for the modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

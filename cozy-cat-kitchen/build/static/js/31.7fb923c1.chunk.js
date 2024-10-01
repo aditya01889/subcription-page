@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkcozy_cat_kitchen=self.webpackChunkcozy_cat_kitchen||[]).push([[31],{31:(e,t,c)=>{c.r(t),c.d(t,{default:()=>n});const n=e=>{e&&e instanceof Function&&c.e(453).then(c.bind(c,453)).then((t=>{let{getCLS:c,getFID:n,getFCP:h,getLCP:s,getTTFB:a}=t;c(e),n(e),h(e),s(e),a(e)}))}}}]);
+//# sourceMappingURL=31.7fb923c1.chunk.js.map

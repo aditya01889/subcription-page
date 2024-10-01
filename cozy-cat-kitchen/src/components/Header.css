@@ -17,11 +17,42 @@
 
 /* Logo styling */
 .logo {
-  width: 120px;
-  margin: 20px 0;
+  width: 80px;  /* Adjust width as needed for a smaller logo */
+  height: auto; /* Maintain aspect ratio */
+  margin: 10px 0; /* Adjust margins to ensure balance in the layout */
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Navigation styling */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.nav-link {
+  font-size: 18px;
+  font-weight: bold;
+  color: #00473e;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #3399cc;
 }
 
 /* Join subscription box */
@@ -75,59 +106,71 @@
 /* Responsive styles */
 @media (max-width: 1024px) {
   .join-box {
-    width: 40%; /* Increase the width for tablet-sized devices */
+    width: 40%;
   }
 
   .join-box h2 {
-    font-size: 24px; /* Adjust heading font size for tablets */
+    font-size: 24px;
   }
 
   .join-box p {
-    font-size: 14px; /* Adjust text font size for tablets */
+    font-size: 14px;
   }
 
   .scroll-button {
-    padding: 8px 16px; /* Adjust button size for tablets */
+    padding: 8px 16px;
+  }
+
+  .nav-link {
+    font-size: 16px;
   }
 }
 
 @media (max-width: 768px) {
   .logo {
-    width: 100px; /* Adjust logo size for mobile */
+    width: 100px;
   }
 
   .join-box {
-    width: 60%; /* Adjust width for mobile */
+    width: 60%;
   }
 
   .join-box h2 {
-    font-size: 22px; /* Adjust heading font size for mobile */
+    font-size: 22px;
   }
 
   .join-box p {
-    font-size: 13px; /* Adjust text font size for mobile */
+    font-size: 13px;
   }
 
   .scroll-button {
-    padding: 8px 14px; /* Adjust button padding for mobile */
+    padding: 8px 14px;
+  }
+
+  .nav-links {
+    gap: 20px;
   }
 }
 
 @media (max-width: 480px) {
   .join-box {
-    width: 80%; /* Adjust width for smaller mobile devices */
+    width: 80%;
   }
 
   .join-box h2 {
-    font-size: 20px; /* Further reduce heading size */
+    font-size: 20px;
   }
 
   .join-box p {
-    font-size: 12px; /* Reduce text font size */
+    font-size: 12px;
   }
 
   .scroll-button {
-    padding: 6px 12px; /* Further reduce button padding */
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .nav-link {
     font-size: 14px;
   }
 }

@@ -5,7 +5,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';  // Optionally ad
 
 const AssortedMeals = () => {
   return (
-    <div className="assorted-meals-section">
+    <div id="assorted-meals" className="assorted-meals-section">
       <div className="assorted-meals-card">
         <h2>Assorted Meals and Broth</h2>
         <p>A weekly mix of our 4 balanced meal variants and 1 broth:</p>

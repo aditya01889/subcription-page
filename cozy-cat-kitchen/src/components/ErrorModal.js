@@ -25,7 +25,9 @@ const ErrorModal = () => {
       <div className="error-modal-content">
         <h2>Error</h2>
         <p>{errorMessage}</p>
-        <button onClick={handleClose} className="close-button" aria-label="Close Error Modal">Close</button>
+        <button onClick={handleClose} className="close-button" aria-label="Close Error Modal">
+          Close
+        </button>
       </div>
     </Modal>
   );
