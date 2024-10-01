@@ -3,8 +3,7 @@ import './App.css';
 import Header from './components/Header';
 import ErrorModal from './components/ErrorModal';  // Error modal will always load
 import Footer from './components/Footer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
-import { faInstagram, faShop } from '@fortawesome/free-brands-svg-icons';
+
 
 // Lazy load other components
 const SubscriptionPlans = React.lazy(() => import('./components/SubscriptionPlans'));
