@@ -23,7 +23,7 @@ const Header = () => {
   }, [showError]);
 
   return (
-    <header className="header">
+    <header id="home" className="header">
       <div className="header-content">
         {/* Logo acting as the Home link */}
         <a href="/" className="logo-link">
